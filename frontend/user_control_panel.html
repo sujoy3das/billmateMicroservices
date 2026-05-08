@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>User Control Panel - BillMate</title>
+    <link rel="icon" type="image/x-icon" href="static/assets/img/logo/billmate-sm.png">
+
+    <!-- CSS files -->
+    <link href="static/assets/css/tabler.min.css" rel="stylesheet" />
+    <link href="static/assets/css/tabler-flags.min.css" rel="stylesheet" />
+    <link href="static/assets/css/tabler-payments.min.css" rel="stylesheet" />
+    <link href="static/assets/css/tabler-vendors.min.css" rel="stylesheet" />
+    <link href="static/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="static/assets/libs/tabler-icons/webfont/tabler-icons.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
+</head>
+
+<body class=" border-top-wide border-primary d-flex flex-column">
+    <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+            <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                <a href="index.html">
+                    <img src="static/assets/img/logo/billmate.png" alt="Billmate" class="navbar-brand-image">
+                </a>
+            </h1>
+            <div class="navbar-nav flex-row order-md-last">
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <span class="avatar avatar-sm" style="background-image: url(static/assets/img/avatars/user.jpg)"></span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <div class="dropdown-item disabled">
+                            <div class="d-flex flex-column">
+                                <span id="navbar_username" class="fw-bold">Loading...</span>
+                                <span id="navbar_useremail" class="small text-muted">Loading...</span>
+                            </div>
+                        </div>
+                        
+                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-subscription-details">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z" /><path d="M3 10l18 0" /><path d="M7 15l.01 0" /><path d="M11 15l2 0" /></svg>
+                            Subscription
+                        </a>
+                        <a href="#" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modal-wallet">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" /><path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" /></svg>
+                            Wallet <span id="navbar_wallet_balance" class="ms-2 text-muted"></span>
+                        </a>
+                        <a href="javascript:;" class="dropdown-item" onclick="openUserManagementModal()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                            User Management <span id="usermanagement" class="ms-2 text-muted"></span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="javascript:;" class="dropdown-item" onclick="auth_logout()">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="page page-center">
+        <div class="container-tight py-4">
+            <div class="card card-md">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">User Control Panel</h2>
+
+                    <div class="mb-3">
+                        <h4 class="card-title">Your Companies</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Company A (Admin)
+                                <a href="index.html" class="btn btn-sm btn-primary">Select</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Company B (Viewer)
+                                <a href="index.html" class="btn btn-sm btn-primary">Select</a>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Company C (Editor)
+                                <a href="index.html" class="btn btn-sm btn-primary">Select</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#createCompanyModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M12 5l0 14"></path>
+                                <path d="M5 12l14 0"></path>
+                            </svg>
+                            Add New Company
+                        </button>
+                    </div>
+
+                    <div class="card card-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="subheader">Subscription Status</div>
+                                <div class="ms-auto lh-1">
+                                    <span class="badge bg-green">Active</span>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <div class="text-muted">Package: <strong id="package_name">Loading...</strong></div>
+                                <div class="text-muted">Ends on: <strong id="subscription_end_date">Loading...</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Company Modal -->
+    <div class="modal fade" id="createCompanyModal" tabindex="-1" aria-labelledby="createCompanyModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createCompanyModalLabel">Create New Company</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="createCompanyForm">
+              <div class="mb-3">
+                <label for="companyName" class="form-label">Company Name</label>
+                <input type="text" class="form-control" id="companyName" name="company_name" required>
+              </div>
+              <div id="createCompanyError" class="alert alert-danger d-none"></div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="submitCreateCompany()">Create Company</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Subscription Details Modal -->
+    <div class="modal modal-blur fade" id="modal-subscription-details" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Subscription Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="subscription-details-body">
+                    <div class="text-center">Loading...</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modal-buy-subscription">Buy Subscription</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Management Modal -->
+    <div class="modal modal-blur fade" id="userManagementModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">User Management</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-3">
+                <div class="col">
+                    <label class="form-label">Select Company (Owner)</label>
+                    <select class="form-select" id="companySelect" onchange="onCompanySelect()">
+                        <option value="">Loading companies...</option>
+                    </select>
+                </div>
+                <div class="col-auto align-self-end">
+                    <button class="btn btn-primary" id="addUserBtn" onclick="openAddUserModal()" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                        Add User
+                    </button>
+                </div>
+            </div>
+            <div id="userListSection" style="display: none;">
+                <div class="table-responsive">
+                    <table class="table table-vcenter card-table" id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>User Name</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th class="w-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Users populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+              Close
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit User Modal -->
+    <div class="modal modal-blur fade" id="addEditUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addEditUserModalTitle">Add User to Company</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="searchUserSection" style="display: none;">
+                <div class="mb-3">
+                    <label class="form-label">Search User by Email</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="userSearchInput" placeholder="Enter user email">
+                        <button class="btn btn-outline-secondary" type="button" onclick="searchUser()">Search</button>
+                    </div>
+                </div>
+                <div id="userSearchResult" class="mt-2"></div>
+            </div>
+            <div id="selectedUserInfo" class="mb-3" style="display: none;">
+                <!-- Selected user info will be shown here -->
+            </div>
+            <input type="hidden" id="selectedUserId">
+            <div id="permissionsSection" style="display: none;">
+                <div class="mb-3" style="display:none"> <!-- Hidden global role selector -->
+                    <label class="form-label">Select Roles</label>
+                    <div class="form-selectgroup form-selectgroup-pills" id="roleList">
+                        <!-- Roles checkboxes -->
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Assign Site Access & Roles</label>
+                    <div class="d-flex flex-column gap-2" id="siteList">
+                        <!-- Sites -->
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Module Permissions (Read-only based on roles)</label>
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="table table-vcenter card-table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Module</th>
+                                        <th>View</th>
+                                        <th>Create</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="moduleAccessTableBody">
+                                    <!-- Module permissions -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">Cancel</a>
+            <a href="javascript:;" class="btn btn-primary ms-auto" id="saveUserBtn" onclick="saveUserPermissions()">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+                Save Permissions
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wallet Modal -->
+    <div class="modal modal-blur fade" id="modal-wallet" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Wallet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="subheader">Current Balance</div>
+                                    </div>
+                                    <div class="h1 mb-3" id="wallet-modal-balance">Loading...</div>
+                                    <div class="input-group mb-2">
+                                        <input type="text" class="form-control" id="wallet-coupon-code" placeholder="Enter coupon code">
+                                        <button class="btn btn-primary" type="button" onclick="redeemCoupon()">Redeem</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Transaction History</label>
+                        <div class="row g-2 mb-2">
+                            <div class="col">
+                                <input type="date" class="form-control" id="wallet-start-date">
+                            </div>
+                            <div class="col">
+                                <input type="date" class="form-control" id="wallet-end-date">
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-white btn-icon" aria-label="Filter" onclick="loadTransactions()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4h16v2.172a2 2 0 0 1 -.586 1.414l-5.414 5.414v7l-6 2v-8.5l-5.414 -5.414a2 2 0 0 1 -.586 -1.414v-2.172z" /></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="table-responsive">
+                                <table class="table table-vcenter card-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="wallet-transactions-body">
+                                        <tr><td colspan="3" class="text-center">Loading...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buy Subscription Modal -->
+    <div class="modal modal-blur fade" id="modal-buy-subscription" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Select a Plan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cards" id="plans-container">
+                        <div class="text-center">Loading plans...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Libs JS -->
+    <script src="static/assets/libs/jquery/jquery.min.js"></script>
+    <script src="static/assets/libs/crypto/crypto-js.min.js"></script>
+    <script src="static/assets/js/tabler.min.js"></script>
+    <script src="static/assets/js/demo.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="static/assets/js/common/toaster.js"></script>
+    <script src="static/assets/js/common/common.js"></script>
+    <script src="static/assets/js/auth/auth.js"></script>
+    <script src="static/assets/js/views/user_management.js"></script>
+    <script>
+        const API_BASE_URL = "http://127.0.0.1:8002";
+        const COMPANY_SERVICE_URL = "http://127.0.0.1:8003";
+        const USER_SERVICE_URL = "http://127.0.0.1:8004";
+        const AUTH_SERVICE_URL = "http://127.0.0.1:8001";
+
+        let state = {
+            plans: [],
+            subscriptions: []
+        };
+
+        async function authFetch(endpoint, options = {}) {
+            const token = getCookie("auth_key");
+            if (!token) {
+                window.location.href = "auth-login.html";
+                return;
+            }
+
+            const defaultHeaders = {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            };
+
+            options.headers = { ...defaultHeaders, ...options.headers };
+
+            let baseUrl = API_BASE_URL;
+            if (endpoint.startsWith('/company')) {
+                if (options.forceUserApi) {
+                    baseUrl = USER_SERVICE_URL;
+                } else {
+                    baseUrl = COMPANY_SERVICE_URL;
+                }
+            } else if (endpoint.startsWith('/users')) {
+                baseUrl = USER_SERVICE_URL;
+            } else if (endpoint.startsWith('/user-management')) {
+                baseUrl = USER_SERVICE_URL;
+            }
+
+            try {
+                const response = await fetch(`${baseUrl}${endpoint}`, options);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.detail || "An error occurred");
+                }
+                return data;
+            } catch (error) {
+                console.error(error);
+                if (!options.hideError) {
+                    toastr.error(error.message);
+                }
+                throw error;
+            }
+        }
+
+        async function loadData() {
+            try {
+                const [plansData, subsData] = await Promise.all([
+                    authFetch('/plans'),
+                    authFetch('/subscriptions')
+                ]);
+                state.plans = plansData || [];
+                state.subscriptions = subsData?.subscriptions || [];
+            } catch (e) {
+                console.error("Failed to load data", e);
+            }
+        }
+
+        async function loadSubscriptionDetails() {
+            const container = document.getElementById('subscription-details-body');
+            container.innerHTML = '<div class="text-center">Loading...</div>';
+            
+            await loadData();
+
+            if (!state.subscriptions || state.subscriptions.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted">No active subscriptions found.</div>';
+                return;
+            }
+
+            let html = '<div class="list-group list-group-flush">';
+            state.subscriptions.forEach(sub => {
+                const plan = state.plans.find(p => p.id === sub.plan_id);
+                const planName = plan ? plan.name : `Plan #${sub.plan_id}`;
+                const statusBadge = sub.status === 'active' 
+                    ? '<span class="badge bg-green">Active</span>' 
+                    : `<span class="badge bg-secondary">${sub.status}</span>`;
+                
+                html += `
+                    <div class="list-group-item">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h4 class="mb-1">${planName} (${sub.plan_type})</h4>
+                                <div class="text-muted">
+                                    Valid until: ${new Date(sub.end_date).toLocaleDateString()}
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                ${statusBadge}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        async function loadPlans() {
+            const container = document.getElementById('plans-container');
+            
+            if (!state.plans || state.plans.length === 0) {
+                container.innerHTML = '<div class="text-center">Loading plans...</div>';
+                await loadData();
+            }
+            
+            if (!state.plans || state.plans.length === 0) {
+                container.innerHTML = '<div class="col-12 text-center">No plans available.</div>';
+                return;
+            }
+
+            let html = '';
+            state.plans.forEach(plan => {
+                const activeSub = state.subscriptions.find(s => s.plan_type === plan.plan_type && s.status === 'active');
+                let buttonHtml = '';
+
+                if (activeSub) {
+                    if (activeSub.plan_id === plan.id) {
+                        buttonHtml = `<button class="btn btn-secondary w-100" disabled>Current Plan</button>`;
+                    } else {
+                        buttonHtml = `<button class="btn btn-primary w-100" onclick="changePlan(${plan.id})">Switch</button>`;
+                    }
+                } else {
+                    buttonHtml = `<button class="btn btn-success w-100" onclick="buyPlan(${plan.id})">Buy Now</button>`;
+                }
+
+                html += `
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card card-md">
+                            <div class="card-body text-center">
+                                <div class="text-uppercase text-muted font-weight-medium">${plan.name}</div>
+                                <div class="h1 my-3">₹${plan.price.toFixed(2)}</div>
+                                <ul class="list-unstyled lh-lg my-3">
+                                    <li>Type: <strong>${plan.plan_type}</strong></li>
+                                    <li><strong>${plan.duration_days}</strong> Days Validity</li>
+                                    <li><strong>${plan.max_companies}</strong> Companies</li>
+                                    <li><strong>${plan.max_users}</strong> Users</li>
+                                    <li><strong>${plan.max_sites}</strong> Sites</li>
+                                </ul>
+                                ${buttonHtml}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        async function buyPlan(planId) {
+            if(!confirm("Are you sure you want to purchase this plan?")) return;
+            
+            try {
+                const result = await authFetch('/subscribe', {
+                    method: 'POST',
+                    body: JSON.stringify({ plan_id: planId })
+                });
+                toastr.success(result.message);
+                
+                // Close buy modal
+                const buyModalEl = document.getElementById('modal-buy-subscription');
+                // Assuming bootstrap 5 is loaded as per template
+                const buyModal = bootstrap.Modal.getInstance(buyModalEl);
+                if (buyModal) buyModal.hide();
+                
+                // Refresh details and show details modal
+                loadSubscriptionDetails();
+                const detailsModalEl = document.getElementById('modal-subscription-details');
+                const detailsModal = bootstrap.Modal.getOrCreateInstance(detailsModalEl);
+                detailsModal.show();
+
+            } catch (e) {
+                // Error handled in authFetch
+            }
+        }
+
+        async function changePlan(planId) {
+            if(!confirm("Are you sure you want to switch to this plan? Charges may apply.")) return;
+            
+            try {
+                const result = await authFetch('/change-plan', {
+                    method: 'POST',
+                    body: JSON.stringify({ new_plan_id: planId })
+                });
+                toastr.success(result.message);
+                
+                // Close buy modal
+                const buyModalEl = document.getElementById('modal-buy-subscription');
+                const buyModal = bootstrap.Modal.getInstance(buyModalEl);
+                if (buyModal) buyModal.hide();
+                
+                // Refresh details and show details modal
+                loadSubscriptionDetails();
+                const detailsModalEl = document.getElementById('omd-alsubsdetailsModalElcription-details');
+                const detailsModal = bootstrap.Modal.getOrCreateInstance();
+                detailsModal.show();
+
+            } catch (e) {
+                // Error handled in authFetch
+            }
+        }
+
+        async function fetchWalletBalance(retryCount = 0) {
+            try {
+                const data = await authFetch('/wallet', { hideError: true });
+                if (data) {
+                    const balanceText = `(₹${data.balance.toFixed(2)})`;
+                    document.getElementById('navbar_wallet_balance').textContent = balanceText;
+                    document.getElementById('wallet-modal-balance').textContent = `₹${data.balance.toFixed(2)}`;
+                }
+            } catch (e) {
+                console.error("Failed to fetch wallet", e);
+                if (retryCount < 3) {
+                    setTimeout(() => fetchWalletBalance(retryCount + 1), 1000);
+                }
+            }
+        }
+
+        async function loadTransactions() {
+            const startDate = document.getElementById('wallet-start-date').value;
+            const endDate = document.getElementById('wallet-end-date').value;
+            
+            let url = '/wallet-transactions';
+            const params = new URLSearchParams();
+            if (startDate) params.append('start_date', startDate);
+            if (endDate) params.append('end_date', endDate + 'T23:59:59'); // Include full day
+            
+            if (params.toString()) url += '?' + params.toString();
+
+            const tbody = document.getElementById('wallet-transactions-body');
+            tbody.innerHTML = '<tr><td colspan="3" class="text-center">Loading...</td></tr>';
+
+            try {
+                const data = await authFetch(url);
+                const txns = data.transactions || [];
+                
+                if (txns.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" class="text-center">No transactions found.</td></tr>';
+                    return;
+                }
+
+                let html = '';
+                txns.forEach(txn => {
+                    const isCredit = txn.amount > 0;
+                    const colorClass = isCredit ? 'text-green' : 'text-red';
+                    const sign = isCredit ? '+' : '';
+                    
+                    html += `
+                        <tr>
+                            <td>${new Date(txn.created_at).toLocaleDateString()}</td>
+                            <td>${txn.type}</td>
+                            <td class="${colorClass}">${sign}₹${Math.abs(txn.amount).toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                tbody.innerHTML = html;
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center text-danger">Failed to load transactions.</td></tr>';
+            }
+        }
+
+        async function redeemCoupon() {
+            const codeInput = document.getElementById('wallet-coupon-code');
+            const code = codeInput.value.trim();
+
+            if (!code) {
+                toastr.warning("Please enter a coupon code");
+                return;
+            }
+
+            try {
+                const result = await authFetch('/wallet/redeem-coupon', {
+                    method: 'POST',
+                    body: JSON.stringify({ code: code })
+                });
+                
+                toastr.success(result.message);
+                codeInput.value = '';
+                fetchWalletBalance(); // Refresh balance
+                loadTransactions(); // Refresh transactions
+            } catch (e) {
+                // Error handled in authFetch
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!getCookie("auth_key")) {
+                window.location.href = "auth-login.html";
+            }
+            const secretKey = "BillMate_Cookie_Secret";
+            const fullNameEnc = getCookie('full_name');
+            const usernameEnc = getCookie('username');
+            const emailEnc = getCookie('email');
+            const username = (fullNameEnc ? cryptoDecrypted(fullNameEnc, secretKey) : null) || (usernameEnc ? cryptoDecrypted(usernameEnc, secretKey) : null);
+            const email = emailEnc ? cryptoDecrypted(emailEnc, secretKey) : null;
+            if (username) {
+                document.getElementById('navbar_username').textContent = username;
+            }
+            if (email) {
+                document.getElementById('navbar_useremail').textContent = email;
+            }
+
+            fetchWalletBalance();
+
+            // Event listeners for modals
+            const detailsModal = document.getElementById('modal-subscription-details');
+            if (detailsModal) {
+                detailsModal.addEventListener('show.bs.modal', loadSubscriptionDetails);
+            }
+
+            const buyModal = document.getElementById('modal-buy-subscription');
+            if (buyModal) {
+                buyModal.addEventListener('show.bs.modal', loadPlans);
+            }
+
+            const walletModal = document.getElementById('modal-wallet');
+            if (walletModal) {
+                walletModal.addEventListener('show.bs.modal', () => {
+                    fetchWalletBalance();
+                    loadTransactions();
+                });
+            }
+        });
+
+        async function submitCreateCompany() {
+            const companyNameInput = document.getElementById('companyName');
+            const errorDiv = document.getElementById('createCompanyError');
+            const companyName = companyNameInput.value;
+            const token = getCookie("auth_key");
+
+            errorDiv.classList.add('d-none');
+
+            if (!companyName) {
+                errorDiv.textContent = "Company Name is required";
+                errorDiv.classList.remove('d-none');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:8003/company/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ company_name: companyName })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    toastr.success('Company created successfully!');
+                    window.location.reload(); // Refresh page to show new company
+                } else {
+                    const errorData = await response.json();
+                    errorDiv.textContent = errorData.detail || 'Failed to create company';
+                    errorDiv.classList.remove('d-none');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorDiv.textContent = 'An error occurred while creating the company.';
+                errorDiv.classList.remove('d-none');
+            }
+        }
+
+        // User Management Functions
+        function openUserManagementModal() {
+            const modalEl = document.getElementById('userManagementModal');
+            if (modalEl) {
+                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                modal.show();
+                loadCompaniesForUserManagement();
+            }
+        }
+
+        async function loadCompaniesForUserManagement() {
+            const select = document.getElementById('companySelect');
+            if (!select) return;
+            
+            select.innerHTML = '<option value="">Loading...</option>';
+            
+            try {
+                const data = await authFetch('/company/list_companies_for_user');
+                const companies = data.companies || [];
+                
+                select.innerHTML = '<option value="">Select a company...</option>';
+                companies.forEach(c => {
+                    const option = document.createElement('option');
+                    option.value = c.company_id;
+                    option.textContent = c.company_name + (c.role ? ` (${c.role})` : '');
+                    select.appendChild(option);
+                });
+            } catch (e) {
+                select.innerHTML = '<option value="">Error loading companies</option>';
+            }
+        }
+
+        function openAddUserModal() {
+             const modalEl = document.getElementById('addEditUserModal');
+             userMgmtState.userId = null; // Clear editing state
+             if (modalEl) {
+                 const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+                 const title = document.getElementById('addEditUserModalTitle');
+                 if(title) title.textContent = 'Add User to Company';
+
+                // Reset and show search section
+                document.getElementById('searchUserSection').style.display = 'block';
+                document.getElementById('permissionsSection').style.display = 'none';
+                document.getElementById('userSearchInput').value = '';
+                document.getElementById('userSearchResult').innerHTML = '';
+                document.getElementById('selectedUserInfo').style.display = 'none';
+                document.getElementById('selectedUserId').value = '';
+
+                 modal.show();
+             }
+        }
+    </script>
+</body>
+
+</html>

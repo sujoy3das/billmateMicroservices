@@ -1,0 +1,50 @@
+<div class="modal modal-blur fade" id="userManagementModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">User Management</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label">Select User</label>
+              <select class="form-select" id="userSelect">
+                <option value="">Select a user...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="mb-3">
+              <label class="form-label">Assign Role</label>
+              <select class="form-select" id="roleSelect">
+                <option value="">Select a role...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Assign Site Access</label>
+          <div class="card">
+            <div class="card-body">
+              <div class="form-selectgroup form-selectgroup-boxes d-flex flex-column" id="siteList">
+                <!-- Sites will be populated here via JS -->
+                <div class="text-muted p-2">Loading sites...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+          Cancel
+        </a>
+        <a href="#" class="btn btn-primary ms-auto" id="savePermissionsBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10" /></svg>
+          Save Changes
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

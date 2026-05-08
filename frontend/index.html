@@ -1,0 +1,834 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description"
+        content="A comprehensive billmate application facilitates stock management, sales, purchases, and customer management. It streamlines operations, boosts efficiency, and enhances customer service, ensuring seamless business operations. Try it today." />
+    <meta name="keywords" content="Traders,BillMate" />
+    <title>Dashboard - BillMate</title>
+    <!-- ICONS AND FAVICON -->
+    <link rel="shortcut icon" href="static/assets/img/logo/billmate.png" type="image/x-icon">
+    <link rel="shortcut icon" href="static/assets/img/logo/billmate.png" type="image/png">
+    <!-- CSS files -->
+    <link href="static/assets/css/tabler.min.css" rel="stylesheet" />
+    <link href="static/assets/css/tabler-flags.min.css" rel="stylesheet" />
+    <link href="static/assets/css/tabler-payments.min.css" rel="stylesheet" />
+    <link href="static/assets/css/tabler-vendors.min.css" rel="stylesheet" />
+    <link href="static/assets/libs/tabler-icons/webfont/tabler-icons.min.css"
+        rel="stylesheet" />
+    <link href="static/assets/css/demo.min.css" rel="stylesheet" />
+    <link href="static/assets/libs/jquery-ui/jquery-ui.css" rel="stylesheet" />
+    <link href="static/assets/libs/toastr/css/toastr.min.css" rel="stylesheet" />
+    <!-- <link href="static/assets/libs/DataTables/datatables.min.css" rel="stylesheet" /> -->
+    <!-- <link href="static/assets/libs/DataTables/dataTables.dateTime.min.css" rel="stylesheet" /> -->
+    <!-- DATATABLE -->
+    <link rel="stylesheet"
+        href="static/assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet"
+        href="static/assets/libs/datatables.net-bs5/jquery_responsive/responsive.dataTables.min.css">
+  
+
+</head>
+
+<body>
+    <div class="flex-column" id="preloader">
+        <div class="page page-center">
+            <div class="container container-slim py-4">
+                <div class="text-center">
+                    <div class="mb-3">
+                        <a href="Javascript:;" class="navbar-brand navbar-brand-autodark">BillMate</a>
+                    </div>
+                    <div class="text-muted mb-3">Please Wait.....</div>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar progress-bar-indeterminate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page">
+        <!--Navbar -->
+        <header class="navbar navbar-expand-md navbar-overlap d-print-none" data-bs-theme="dark">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu"
+                    aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                    <a href="javascript:;">
+                        <!-- <img src="/static/logo.png" width="110" height="30" alt="Tabler"
+                            class="navbar-brand-image"> -->
+                        <a href="#">BillMate</a>
+                    </a>
+                </h1>
+                <div class="navbar-nav flex-row order-md-last">
+                    <div class="d-none d-md-flex">
+                        <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path
+                                    d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                            </svg>
+                        </a>
+                        <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode"
+                            data-bs-toggle="tooltip" data-bs-placement="bottom">
+                            <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                                <path
+                                    d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                            </svg>
+                        </a>
+
+                    </div>
+                    <div class="nav-item dropdown ms-2">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown"
+                            aria-label="Open user menu">
+                            <span class="avatar avatar-sm"
+                                style="background-image: url(static/assets/img/avatars/user.jpg)"></span>
+                            <div class="d-none d-xl-block ps-2">
+                                <div id="navbar_username">Loading...</div>
+                                <div class="mt-1 small text-muted" id="navbar_company_name">Loading...</div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a href="user_control_panel.html" class="dropdown-item">Switch Company</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="javascript:;" class="dropdown-item" onclick="auth_logout()">Logout</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
+                        <ul class="navbar-nav">
+                            <li class="nav-item" onclick="toggleActivate(this)">
+                                <a class="nav-link" href="index.html">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Home
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item active" onclick="toggleActivate(this)">
+                                <a class="nav-link" href="javascript:;" onclick="views_dashboard_display();">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+                                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                                            <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Dashboard
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown" onclick="toggleActivate(this)">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                                            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"></path>
+                                            <line x1="9" y1="7" x2="10" y2="7"></line>
+                                            <line x1="9" y1="13" x2="15" y2="13"></line>
+                                            <line x1="13" y1="17" x2="15" y2="17"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Accounts Master
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_ledger_display();">
+                                                Ledger
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_group_display();">
+                                                Ledger Group
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_customers_display();">
+                                                Customers
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_suppliers_display();">
+                                                Suppliers
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown" onclick="toggleActivate(this)">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2z"></path>
+                                            <line x1="16" y1="2" x2="16" y2="22"></line>
+                                            <line x1="8" y1="2" x2="8" y2="22"></line>
+                                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Accounts Voucher
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <div class="dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
+                                                    aria-expanded="false">
+                                                    Purchase
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_purchase_order_display();">
+                                                        Purchase Order
+                                                    </a>
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_purchases_display();">
+                                                        Purchase
+                                                    </a>
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_purchase_return_display();">
+                                                        Purchase Return (DN)
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
+                                                    aria-expanded="false">
+                                                    Sales
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_sales_order_display();">
+                                                        Sales Order
+                                                    </a>
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_sales_display();">
+                                                        Sales
+                                                    </a>
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_sales_return_display();">
+                                                        Sales Return (CN)
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_payment_display();">
+                                                Payment
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_receipt_display();">
+                                                Receipt
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_contra_display();">
+                                                Contra
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_journal_display();">
+                                                Journal
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_exchange_display();">
+                                                Exchange
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown" onclick="toggleActivate(this)">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-building-warehouse">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M3 21v-13l9 -4l9 4v13" />
+                                            <path d="M13 13h4v8h-10v-6h6" />
+                                            <path d="M13 21v-9a1 1 0 0 0 -1 -1h-2a1 1 0 0 0 -1 1v3" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Inventory Master
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_stock_group_display();">
+                                                Stock Group
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_stock_category_display();">
+                                                Stock Category
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_stock_item_display();">
+                                                Stock Item
+                                            </a>
+                                            <div class="dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
+                                                    aria-expanded="false">
+                                                    Unit
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_unit_simple_display();">
+                                                        Simple
+                                                    </a>
+                                                    <a href="javascript:;" class="dropdown-item" onclick="views_unit_compound_display();">
+                                                        Compound
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_warehouse_display();">
+                                                Warehouse
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown" onclick="toggleActivate(this)">
+                                <a class="nav-link dropdown-toggle" href="#navbar-base" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <path d="M9 19v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
+                                            <path d="M3 13l9 -10l9 10v7a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-7"></path>
+                                            <path d="M12 10l0 4"></path>
+                                            <path d="M10 12l4 0"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Inventory Voucher
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_stock_transfer_display();">
+                                                Stock Transfer
+                                            </a>
+                                            <a href="javascript:;" class="dropdown-item" onclick="views_physical_stock_display();">
+                                                Physical Stock
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown" onclick="toggleActivate(this)">
+                                <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span
+                                        class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="icon icon-tabler icon-tabler-chart-infographic" width="24"
+                                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                            <circle cx="7" cy="7" r="4"></circle>
+                                            <path d="M7 3v4h4"></path>
+                                            <line x1="9" y1="17" x2="9" y2="21"></line>
+                                            <line x1="17" y1="14" x2="17" y2="21"></line>
+                                            <line x1="13" y1="13" x2="13" y2="21"></line>
+                                            <line x1="21" y1="12" x2="21" y2="21"></line>
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Reports
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <div class="dropdown-menu-columns">
+                                        <div class="dropdown-menu-column">
+                                            <a class="dropdown-item" href="javascript:;" onclick="views_trial_balance_display();">
+                                                Trial Balance
+                                            </a>
+                                            <a class="dropdown-item" href="javascript:;" onclick="views_profit_loss_display();">
+                                                Profit and Loss
+                                            </a>
+                                            <a class="dropdown-item" href="javascript:;" onclick="views_balance_sheet_display();">
+                                                Balance Sheet
+                                            </a>
+                                            <div class="dropend">
+                                                <a class="dropdown-item dropdown-toggle" href="#"
+                                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button"
+                                                    aria-expanded="false">
+                                                    Period Data
+                                                </a>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('sales');">
+                                                        Sales
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('purchase');">
+                                                        Purchase
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('salesOrder');">
+                                                        Sales Order
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('purchaseOrder');">
+                                                        Purchase Order
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('debitnote');">
+                                                        Debit Note
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('creditnote');">
+                                                        Credit Note
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('receipt');">
+                                                        Receipt
+                                                    </a>
+                                                    <a class="dropdown-item" href="javascript:;" onclick="findReportData('payment');">
+                                                        Payment
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown" onclick="toggleActivate(this)">
+                                <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside" role="button" aria-expanded="false">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-settings">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path
+                                                d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" />
+                                            <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-title">
+                                        Settings
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:;" onclick="views_company_info_display()">
+                                        Company Info
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;" onclick="views_site_management_display();">
+                                        Site Management
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:;" onclick="views_users_management_display();">
+                                        Users Management
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="page-wrapper" id="main-content">
+            <!-- Page header -->
+            <div class="page-header d-print-none text-white">
+                <div class="container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <!-- Page pre-title -->
+                            <div class="page-pretitle">
+                                <p>Overview</p>
+                            </div>
+                            <h2 class="page-title">
+                                <p>Home</p>
+                            </h2>
+                        </div>
+                        <!-- Page title actions -->
+                        <div class="col-auto ms-auto d-print-none page-button">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page body -->
+            <div class="page-body">
+                <div class="container-xl">
+                    <div class="row row-deck row-cards" id="quick-action-buttons">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Quick Actions</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <a href="javascript:;" class="btn btn-primary" onclick="views_purchases_new_display();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M4 19l16 0"></path>
+                                                <path d="M4 15l4 -6l4 2l4 -5l4 4"></path>
+                                            </svg>
+                                            New Purchase
+                                        </a>
+                                        <a href="javascript:;" class="btn btn-primary" onclick="views_sales_new_display();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M4 19l16 0"></path>
+                                                <path d="M4 15l4 -6l4 2l4 -5l4 4"></path>
+                                            </svg>
+                                            New Sales
+                                        </a>
+                                        <a href="javascript:;" class="btn btn-primary" onclick="views_payment_new_display();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                                                <path d="M12 8v4"></path>
+                                                <path d="M12 16h.01"></path>
+                                            </svg>
+                                            New Payment
+                                        </a>
+                                        <a href="javascript:;" class="btn btn-primary" onclick="views_receipt_new_display();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                                                <path d="M12 8v4"></path>
+                                                <path d="M12 16h.01"></path>
+                                            </svg>
+                                            New Receipt
+                                        </a>
+                                        <a href="javascript:;" class="btn btn-primary" onclick="views_exchange_new_display();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M14 18h-8a2 2 0 0 1 -2 -2v-8a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2z"></path>
+                                                <path d="M20 8v7a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2v-7"></path>
+                                                <path d="M17 11h-2a2 2 0 0 1 -2 -2v-2"></path>
+                                                <path d="M11 14h-2a2 2 0 0 1 -2 -2v-2"></path>
+                                            </svg>
+                                            Exchange
+                                        </a>
+                                        <a href="javascript:;" class="btn btn-primary" onclick="views_stock_item_price_update_display();">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                <path d="M7 10h10m-5 -5v10"></path>
+                                                <path d="M7 10l-2 -2"></path>
+                                                <path d="M17 10l2 -2"></path>
+                                                <path d="M7 10l-2 2"></path>
+                                                <path d="M17 10l2 2"></path>
+                                            </svg>
+                                            Stock Item Price Update
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page body end here -->
+            <footer class="footer footer-transparent d-print-none">
+                <div class="container-xl">
+                    <div class="row text-center align-items-center flex-row-reverse">
+                        <div class="col-lg-auto ms-lg-auto">
+                            <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item"><a href="#" class="link-primary">BillMate</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                            <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item">
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear())</script>
+                                    Developed <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="icon icon-tabler icon-tabler-heart" width="24" height="24"
+                                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path
+                                            d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572">
+                                        </path>
+                                    </svg> by - <a target="_blank" href="https://bataitech.com"
+                                        class="btn-link link-secondary">
+                                        Bataitech
+                                    </a>
+                                    All rights reserved.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+    <!-- ====================ALL MODALS ARE HERE==================== -->
+    <!-- Medium Modal Start -->
+    <div class="modal modal-blur fade" id="mediumModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="mediumModalTitle">
+
+                </div>
+                <div class="modal-body" id="mediumModalBody">
+
+                </div>
+                <div class="modal-footer" id="mediumModalFooter">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Medium Modal End -->
+    <!-- FUll Width Modal Start -->
+    <div class="modal modal-blur fade" id="fullWidthModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="fullWidthModalTitle">
+                    <h5 class="modal-title">Full width modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="fullWidthModalBody">
+
+                </div>
+                <div class="modal-footer" id="fullWidthModalFooter">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FUll Width Modal End -->
+
+    <!-- Small modal start -->
+    <div class="modal modal-blur fade" id="smallModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="smallModalTitle">
+                    <div class="modal-title">Are you sure?</div>
+
+                </div>
+                <div class="modal-body" id="smallModalBody">
+
+                </div>
+                <div class="modal-footer" id="smallModalFooter">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Small modal end -->
+
+    <!-- Libs JS -->
+    <script src="static/assets/libs/jquery/jquery.min.js"></script>
+    <script src="static/assets/libs/jquery-ui/jquery-ui.js"></script>
+    <script src="static/assets/libs/litepicker/dist/litepicker.js"></script>
+    <script
+        src="static/assets/libs/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+
+    <script src="static/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="static/assets/libs/jsvectormap/dist/js/jsvectormap.min.js"></script>
+    <script src="static/assets/libs/jsvectormap/dist/maps/world.js"></script>
+    <script src="static/assets/libs/jsvectormap/dist/maps/world-merc.js"></script>
+    <!-- Tabler Core -->
+    <script src="static/assets/js/tabler.min.js"></script>
+    <script src="static/assets/js/demo.min.js"></script>
+
+    <!-- COMPONENT COMMON-->
+    <script src="static/assets/js/common/common.js"></script>
+    <script src="static/assets/js/common/customAjax.js"></script>
+    <script src="static/assets/js/auth/auth.js"></script>
+
+
+    <!-- Toastr -->
+    <script src="static/assets/libs/toastr/js/toastr.init.js"></script>
+    <script src="static/assets/libs/toastr/js/toastr.min.js"></script>
+    <script src="static/assets/js/common/toaster.js"></script>
+
+    <!-- VIEWSFILES -->
+    <script src="static/assets/js/views/views-dashboard.js"></script>
+    <script src="static/assets/js/views/views-state.js"></script>
+    <script src="static/assets/js/views/views-customers.js"></script>
+    <script src="static/assets/js/views/views-group.js"></script>
+    <script src="static/assets/js/views/views-ledger.js"></script>
+    <script src="static/assets/js/views/views-company-info.js"></script>
+    <script src="static/assets/js/views/views-stock-group.js"></script>
+    <script src="static/assets/js/views/views-stock-category.js"></script>
+    <script src="static/assets/js/views/views-stock-item.js"></script>
+    <script src="static/assets/js/views/views-purchases.js"></script>
+    <script src="static/assets/js/views/views-invoice.js"></script>
+    <script src="static/assets/js/views/views-receipt.js"></script>
+    <script src="static/assets/js/views/views-payment.js"></script>
+    <script src="static/assets/js/views/views-creditnote.js"></script>
+    <script src="static/assets/js/views/views-debitnote.js"></script>
+    <script src="static/assets/js/views/views-journal.js"></script>
+    <script src="static/assets/js/views/views-stock-journal.js"></script>
+    <script src="static/assets/js/views/views-reports.js"></script>
+
+    <!-- Datatable -->
+    <!-- <script src="static/assets/libs/DataTables/datatables.min.js"></script> -->
+    <!-- <script src="static/assets/libs/DataTables/dataTables.dateTime.min.js"></script> -->
+    <script
+        src="static/assets/libs/datatables.net-bs5/jquery_responsive/jquery.dataTables.min.js"></script>
+    <script
+        src="static/assets/libs/datatables.net-bs5/jquery_responsive/dataTables.responsive.min.js"></script>
+
+    <!-- HTMLto PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
+        integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/javascript">
+        removeSession = () => {
+            sessionStorage.clear();
+        }
+        // Print pdf here---->>
+        printPdf = (elem) => {
+            var printContents = document.getElementById('main').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            document.body.style.minHeight = "203mm"
+            document.body.style.maxHeight = "203mm"
+            document.body.style.padding = "0px 1px 0px 1px";
+            // document.execCommand('print')
+            window.print();
+            document.body.innerHTML = originalContents;
+            window.location.href = "#"; // Changed from "{{url_for('home')}}"
+
+
+        }
+
+        // function for download pdf--------->>
+        generatePdf = () => {
+            var element = document.getElementById('main');
+            //more custom settings
+            var opt =
+            {
+
+                margin: [0.1, 0.1, 0.1, 0.1],
+                filename: 'Download' + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { dpi: 192, scale: 4 },
+                jsPDF: { unit: "mm", format: "a4", orientation: "p" }
+
+            };
+            // New Promise-based usage:
+            html2pdf().set(opt).from(element).save();
+        };
+
+        // function for download csv---->>
+        function tableToCSV(tbl) {
+            const dataTable = document.getElementById(tbl);
+
+            const exporter = new TableCSVExporter(dataTable);
+            const csvOutput = exporter.convertToCSV();
+            const csvBlob = new Blob([csvOutput], { type: "text/csv" });
+            const blobUrl = URL.createObjectURL(csvBlob);
+            const anchorElement = document.createElement("a");
+
+            anchorElement.href = blobUrl;
+            anchorElement.download = "export.csv";
+            anchorElement.click();
+
+            setTimeout(() => {
+                URL.revokeObjectURL(blobUrl);
+            }, 500);
+        }
+
+        function downloadCSVFile(csv_data) {
+
+            // Create CSV file object and feed
+            // our csv_data into it
+            CSVFile = new Blob([csv_data], {
+                type: "text/csv"
+            });
+
+            // Create to temporary link to initiate
+            // download process
+            var temp_link = document.createElement('a');
+
+            // Download csv file
+            temp_link.download = "Report.csv";
+            var url = window.URL.createObjectURL(CSVFile);
+            temp_link.href = url;
+
+            // This link should not be displayed
+            temp_link.style.display = "none";
+            document.body.appendChild(temp_link);
+
+            // Automatically click the link to
+            // trigger download
+            temp_link.click();
+            document.body.removeChild(temp_link);
+        }
+
+        // Function start
+        class TableCSVExporter {
+            constructor(table, includeHeaders = true) {
+                this.table = table;
+                this.rows = Array.from(table.querySelectorAll("tr"));
+
+                if (!includeHeaders && this.rows[0].querySelectorAll("th").length) {
+                    this.rows.shift();
+                }
+            }
+
+            convertToCSV() {
+                const lines = [];
+                const numCols = this._findLongestRowLength();
+
+                for (const row of this.rows) {
+                    let line = "";
+
+                    for (let i = 0; i < numCols; i++) {
+                        if (row.children[i] !== undefined) {
+                            line += TableCSVExporter.parseCell(row.children[i]);
+                        }
+
+                        line += i !== numCols - 1 ? "," : "";
+                    }
+
+                    lines.push(line);
+                }
+
+                return lines.join("\n");
+            }
+
+            _findLongestRowLength() {
+                return this.rows.reduce(
+                    (l, row) => (row.childElementCount > l ? row.childElementCount : l),
+                    0
+                );
+            }
+
+            static parseCell(tableCell) {
+                let parsedValue = tableCell.textContent;
+
+                // Replace all double quotes with two double quotes
+                parsedValue = parsedValue.replace(/"/g, `""`);
+
+                // If value contains comma, new-line or double-quote, enclose in double quotes
+                parsedValue = /[,"]/.test(parsedValue) ? `"${parsedValue}"` : parsedValue;
+
+                return parsedValue;
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>
